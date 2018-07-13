@@ -5,12 +5,12 @@ import googlemaps
 key = 'AIzaSyBgZPQc5CswWQD63YSIiXO_AcS-g4wp-n4'
 location = "Lajeado, RS"
 
-pinpoints = seek_places.get_pinpoints(key, location, radius=2000)
-len(pinpoints)
-gmaps = googlemaps.Client(key)
+gplaces = Places.Places(key)
+pinpoints = gplaces.get_pinpoints(location, radius=2000)
+vicinities = gplaces.get_vicinities(pinpoints, radius=2000)
+
 
 places = []
-
 for pinpoint in pinpoints:
     places.append(gmaps.places_nearby(location=pinpoint, radius=2000))
 

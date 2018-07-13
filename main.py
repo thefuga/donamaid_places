@@ -1,9 +1,9 @@
 import create_dataset
-import seek_places
+import Places
 
 if __name__ == "__main__":
-    key = "AIzaSyBgZPQc5CswWQD63YSIiXO_AcS-g4wp-n4"
 
+    places = Places("AIzaSyBgZPQc5CswWQD63YSIiXO_AcS-g4wp-n4")    
     cities = ("Londrina, PR", "Maringa, PR", "Caxias, RS", "Pelotas, RS", "Rio Grande, RS", "Santa Maria, RS")
 
     places = ("Escritórios de contabilidade", "Escritórios administrativos", "Escritórios de arquitetura",

@@ -53,7 +53,7 @@ class Places(object):
         return places_found
 
 
-    def get_pinpoints(location, radius=1000):
+    def get_pinpoints(self, location, radius=1000):
 
         location = self.__gmaps.geocode(location)
 
@@ -87,7 +87,7 @@ class Places(object):
         return pinpoints
 
 
-    def get_place_info(ids_list):
+    def get_place_info(self, ids_list):
         '''
         Querys for details on places based on their IDs.
 
@@ -110,3 +110,58 @@ class Places(object):
             places_details.append((name, phone_number, website))
 
         return places_details
+
+
+    def get_vicinities(self, pinpoints, city=None, radius=1000):
+        '''
+        Tries to find a list of vicinities in a given set of pinpoints.
+        :param pinpoints: list of pinpoint.
+        :type pinpoints: googlemaps location.
+
+        :param city: City to find the pinpoints. Will actually only remove the
+        token 'city' from the formatted address returned by google nearby
+        search.
+
+        :param radius: radius of each pinpoint.
+        :type radius: int.
+
+        :rtype: list of strings.
+
+        '''
+        places = []
+
+        if ", " in city:
+            city = city.split(", ")[0]
+
+        for pinpoint in pinpoints:
+            places.append(self.__gmaps.places_nearby(pinpoint, radius))
+
+        vicinities = set()
+        for place in places:
+            for details in place['results']:
+                vicinities.add(details['vicinity'])
+
+        result = set()
+        for vicinity in vicinities:
+            try:
+                token = vicinity
+                if city not in token:
+                    continue
+
+                if " - " not in token:
+                    continue
+
+                while " - " in token:
+                    token = token.split(" - ")
+                    token = token[len(token)-1]
+
+                if(city):
+                    if token.endswith(", " + city):
+                        token = token.replace(", " + city, "")
+
+                result.add(token)
+
+            except IndexError:
+                pass
+
+        return list(result)

@@ -112,7 +112,7 @@ class Places(object):
         return places_details
 
 
-    def get_vicinities(self, pinpoints, city=None, radius=1000):
+    def get_vicinities(self, pinpoints, location, radius=1000):
         '''
         Tries to find a list of vicinities in a given set of pinpoints.
         :param pinpoints: list of pinpoint.
@@ -130,8 +130,8 @@ class Places(object):
         '''
         places = []
 
-        if ", " in city:
-            city = city.split(", ")[0]
+        if ", " in location:
+            location = location.split(", ")[0]
 
         for pinpoint in pinpoints:
             places.append(self.__gmaps.places_nearby(pinpoint, radius))
@@ -145,7 +145,7 @@ class Places(object):
         for vicinity in vicinities:
             try:
                 token = vicinity
-                if city not in token:
+                if location not in token:
                     continue
 
                 if " - " not in token:
@@ -155,9 +155,9 @@ class Places(object):
                     token = token.split(" - ")
                     token = token[len(token)-1]
 
-                if(city):
-                    if token.endswith(", " + city):
-                        token = token.replace(", " + city, "")
+                if(location):
+                    if token.endswith(", " + location):
+                        token = token.replace(", " + location, "")
 
                 result.add(token)
 

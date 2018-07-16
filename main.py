@@ -3,20 +3,20 @@ import Places
 
 
 if __name__ == "__main__":
-
+    
     gplaces = Places.Places("AIzaSyBgZPQc5CswWQD63YSIiXO_AcS-g4wp-n4")
     cities = ("Londrina, PR", "Maringa, PR", "Caxias, RS", "Pelotas, RS", "Rio Grande, RS", "Santa Maria, RS")
-    #cities = ("Pelotas, RS", )
+    #cities = ("Londrina, PR", )
     ddds = {"Londrina, PR": "(43)",
             "Maringa, PR": "(44)",
             "Caxias, RS": "(54)",
             "Pelotas, RS": "(53)",
             "Rio Grande, RS": "(53)",
             "Santa Maria, RS": "(55)"}
-
-    places = ("Escritórios de contabilidade", "Escritórios administrativos", "Escritórios de arquitetura",
-    "Escritórios de advogacia", "clinicas odontológicas", "Clinicas psicológicas", "Coworking",
-    "Agências de publicidade", "Academias", "Pet shop")
+    
+    places = ("Escritorios de contabilidade", "Escritorios administrativos", "Escritorios de arquitetura",
+    "Escritorios de advogacia", "clinicas odontologicas", "Clinicas psicologicas", "Coworking",
+    "Agencias de publicidade", "Academias", "Pet shop")
     #places = ("Academias", )
 
     for city in cities:

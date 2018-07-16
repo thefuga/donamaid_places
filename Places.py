@@ -10,6 +10,7 @@ class Places(object):
     def __init__(self, key):
         self.__gmaps = googlemaps.Client(key)
 
+
     def get_places(self, query_string, location, radius=None):
         '''
         Querys for a list of places from a given string query.
@@ -54,7 +55,19 @@ class Places(object):
 
 
     def get_pinpoints(self, location, radius=1000):
+        '''
+        Gets pinpoints of location based on an initial location. Finds the limits of the city from the location
+        given and returns a list of pinpoints with 2*radius of spacing from each other.
+        :param location: City in which the pinpoints will be placed. The city limits from Google Places API will be 
+        used to perform the search. 
+        :type location: string or tuple with coordinates.
+        
+        :param radius: Used to calculate the spacing between each pinpoint. 
+        Will directly impact the number of pinpoints returned.
+        :type radius: int.
 
+        :rtype: List with latitude and longitude of each pinpoint found.
+        '''
         location = self.__gmaps.geocode(location)
 
         #km_degree = 111.32
@@ -139,7 +152,10 @@ class Places(object):
         vicinities = set()
         for place in places:
             for details in place['results']:
-                vicinities.add(details['vicinity'])
+                try:
+                    vicinities.add(details['vicinity'])
+                except KeyError:
+                    pass
 
         result = set()
         for vicinity in vicinities:

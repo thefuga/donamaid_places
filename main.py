@@ -20,20 +20,27 @@ if __name__ == "__main__":
     #places = ("Academias", )
 
     for city in cities:
+        print("Looking for places in " + city + "...")
         vicinities = gplaces.get_vicinities(gplaces.get_pinpoints(city, radius=2000), location=city)
 
         for place in places:
+            print("...Looking for " + place + "...")
             places_full = []
             for vicinity in vicinities:
+                print("...In " + vicinity)
                 places_full += [x for x in gplaces.get_places(place + ", " + vicinity, location=city, radius=2000)]
 
             places_full = set(places_full)
             infos = gplaces.get_place_info(places_full)
 
             outsiders = []
+            print("...Refining results...")
             for info in infos:
                 if ddds[city] not in info[1]:
                     outsiders.append(info)
 
             places_full = [x for x in infos if x not in outsiders]
             create_dataset.generate_dataset(places_full, place + " em " + city)
+            print("All done for this place!")
+        print("All done for this city!")
+    print("All done!")
